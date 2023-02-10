@@ -22,5 +22,5 @@ echo "== Setup global gitignore =="
 mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/git"
 
 for name in Linux macOS VisualStudioCode; do
-  curl -s "https://raw.githubusercontent.com/github/gitignore/main/Global/${name}.gitignore" >>"${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
+  curl -sS "https://raw.githubusercontent.com/github/gitignore/main/Global/${name}.gitignore" >>"${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
 done
