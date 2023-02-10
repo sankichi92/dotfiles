@@ -1,0 +1,15 @@
+[user]
+	name = Takahiro Miyoshi
+	email = takahiro-miyoshi@sankichi.net
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMaii0+B78G1xIx6c1ZwbksiRvI9x3klj3R4vmETx6aJ
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+[rebase]
+	autostash = true
+	autosquash = true
