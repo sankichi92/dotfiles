@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'rubocop/rake_task'
-
-RuboCop::RakeTask.new
-
 desc 'Setup Git, Prezto, and Vim'
 task default: %i[git prezto vim]
 
