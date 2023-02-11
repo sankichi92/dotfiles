@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
-# set -vx
+
+repo_root=$(
+  cd "$(dirname "${BASH_SOURCE[0]}")"
+  pwd
+)
 
 echo "== Setup prezto =="
 
@@ -24,3 +28,7 @@ mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/git"
 for name in Linux macOS VisualStudioCode; do
   curl -sSf "https://raw.githubusercontent.com/github/gitignore/main/Global/${name}.gitignore" >>"${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
 done
+
+echo "== Setup vimrc =="
+
+ln -s "${repo_root}/config/vim/vimrc" "$HOME/.vimrc"

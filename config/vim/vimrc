@@ -1,1 +1,3 @@
-syntax on
+if has('syntax')
+  syntax on
+endif
