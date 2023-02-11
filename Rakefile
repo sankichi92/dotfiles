@@ -4,12 +4,12 @@ require 'rubocop/rake_task'
 
 RuboCop::RakeTask.new
 
+desc 'Setup Git, Prezto, and Vim'
+task default: %i[git prezto vim]
+
 repo = Pathname(File.expand_path(__dir__))
 home = Pathname(Dir.home)
 config = Pathname(ENV.fetch('XDG_CONFIG_HOME', home.join('.config')))
-
-desc 'Setup Git and Vim'
-task default: %i[git vim]
 
 desc 'Setup Git config and global ignore'
 task git: [home.join('.gitconfig'), config.join('git/ignore')]
@@ -27,9 +27,33 @@ namespace :git do
     end
   end
 
-  desc 'Remove Git config'
+  desc 'Remove Git config files'
   task :clean do
-    rm [home.join('.gitconfig'), config.join('git/ignore')]
+    rm_f [home.join('.gitconfig'), config.join('git/ignore')]
+  end
+end
+
+zdotdir = Pathname(ENV.fetch('ZDOTDIR', Dir.home))
+zdotfiles = %w[zlogin zlogout zprofile zshenv zshrc].map { |f| zdotdir.join(".#{f}") }
+
+desc 'Setup Prezto'
+task prezto: zdotfiles
+
+namespace :prezto do
+  file zdotdir.join('.zprezto') do |t|
+    sh "git clone -q --recursive https://github.com/sankichi92/prezto.git #{t.name}"
+  end
+
+  zdotfiles.each do |zdotfile|
+    file zdotfile => zdotdir.join('.zprezto') do
+      ln_s zdotdir.join('.zprezto/runcoms', zdotfile.basename.to_s[1..]), zdotfile
+    end
+  end
+
+  desc 'Remove .zprezto'
+  task :clean do
+    rm_f zdotfiles
+    rm_rf zdotdir.join('.zprezto')
   end
 end
 
@@ -43,6 +67,6 @@ namespace :vim do
 
   desc 'Remove .vimrc'
   task :clean do
-    rm home.join('.vimrc')
+    rm_f home.join('.vimrc')
   end
 end
