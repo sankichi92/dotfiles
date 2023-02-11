@@ -19,7 +19,7 @@ namespace :git do
 
   file config.join('git/ignore') => config.join('git') do |t|
     %w[macOS VisualStudioCode].each do |name|
-      sh "curl -sS https://raw.githubusercontent.com/github/gitignore/main/Global/#{name}.gitignore >>#{t.name}"
+      sh "curl -sSf https://raw.githubusercontent.com/github/gitignore/main/Global/#{name}.gitignore >>#{t.name}"
     end
   end
 
