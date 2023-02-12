@@ -14,7 +14,7 @@ git clone --recursive https://github.com/sankichi92/prezto.git "${ZDOTDIR:-$HOME
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/z*; do
   rcdest="${ZDOTDIR:-$HOME}/.$(basename "$rcfile")"
 
-  if [[ -f "$rcdest" ]]; then
+  if [[ -e "$rcdest" ]]; then
     mv "$rcdest" "${rcdest}_backup"
   fi
 
@@ -23,12 +23,12 @@ done
 
 echo "== Setup global gitignore =="
 
-mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/git"
+mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/git"
 
 for name in Linux macOS VisualStudioCode; do
-  curl -sSf "https://raw.githubusercontent.com/github/gitignore/main/Global/${name}.gitignore" >>"${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
+  curl -sSf "https://raw.githubusercontent.com/github/gitignore/main/Global/${name}.gitignore" >>"${XDG_CONFIG_HOME:-${HOME}/.config}/git/ignore"
 done
 
 echo "== Setup vimrc =="
 
-ln -s "${repo_root}/config/vim/vimrc" "$HOME/.vimrc"
+ln -s "${repo_root}/config/vim/vimrc" "${HOME}/.vimrc"
