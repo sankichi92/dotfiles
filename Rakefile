@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-desc 'Setup Git, Prezto, and Vim'
-task default: %i[git prezto vim]
+desc 'Setup Git, Prezto, Vim, and RuboCop'
+task default: %i[git prezto vim rubocop]
 
 repo = Pathname(File.expand_path(__dir__))
 home = Pathname(Dir.home)
@@ -64,5 +64,21 @@ namespace :vim do
   desc 'Remove .vimrc'
   task :clean do
     rm_f home.join('.vimrc')
+  end
+end
+
+desc 'Setup RuboCop'
+task rubocop: config.join('rubocop/config.yml')
+
+namespace :rubocop do
+  directory config.join('rubocop')
+
+  file config.join('rubocop/config.yml') => config.join('rubocop') do |t|
+    ln_s repo.join('config/rubocop/config.yml'), t.name
+  end
+
+  desc 'Remove RuboCop configs'
+  task :clean do
+    rm_rf config.join('rubocop')
   end
 end
