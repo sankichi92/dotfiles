@@ -8,8 +8,8 @@
 	gpgsign = true
 [init]
 	defaultBranch = main
-[fetch]
-	prune = true
+[pager]
+	branch = false
 [rebase]
 	autostash = true
 	autosquash = true
