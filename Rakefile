@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 desc 'Setup Git, Prezto, Vim, and RuboCop'
-task default: %i[git prezto vim rubocop]
+task default: %i[git prezto vim rubocop ipython]
 
 repo = Pathname(File.expand_path(__dir__))
 home = Pathname(Dir.home)
@@ -80,5 +80,21 @@ namespace :rubocop do
   desc 'Remove RuboCop configs'
   task :clean do
     rm_rf config.join('rubocop')
+  end
+end
+
+desc 'Setup RuboCop'
+task ipython: home.join('.ipython/profile_default/ipython_kernel_config.py')
+
+namespace :ipython do
+  directory home.join('.ipython/profile_default')
+
+  file home.join('.ipython/profile_default/ipython_kernel_config.py') => home.join('.ipython/profile_default') do |t|
+    ln_s repo.join('config/ipython/ipython_kernel_config.py'), t.name
+  end
+
+  desc 'Remove IPython config'
+  task :clean do
+    rm_rf home.join('.ipython/profile_default/ipython_kernel_config.py')
   end
 end
