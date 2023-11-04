@@ -13,3 +13,9 @@
 [rebase]
 	autostash = true
 	autosquash = true
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+[includeIf "hasconfig:remote.*.url:https://github.com/sankichi92/**"]
+  path = sankichi92.ini
+[includeIf "hasconfig:remote.*.url:https://github.com/arkedge/**"]
+  path = arkedge.ini

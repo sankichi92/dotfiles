@@ -7,15 +7,19 @@ repo = Pathname(File.expand_path(__dir__))
 home = Pathname(Dir.home)
 config = Pathname(ENV.fetch('XDG_CONFIG_HOME', home.join('.config')))
 
+git_config_src_to_dst = Dir[repo.join('config/git/*')].to_h { |f| [f, config.join("git/#{File.basename(f)}")] }
+
 desc 'Setup Git config and global ignore'
-task git: [home.join('.gitconfig'), config.join('git/ignore')]
+task git: [*git_config_src_to_dst.values, config.join('git/ignore')]
 
 namespace :git do
-  file home.join('.gitconfig') do |t|
-    ln_s repo.join('config/git/config'), t.name
-  end
-
   directory config.join('git')
+
+  git_config_src_to_dst.each do |src, dst|
+    file dst => config.join('git') do
+      ln_s src, dst
+    end
+  end
 
   file config.join('git/ignore') => config.join('git') do |t|
     %w[macOS VisualStudioCode].each do |name|
@@ -25,7 +29,7 @@ namespace :git do
 
   desc 'Remove Git config files'
   task :clean do
-    rm_f [home.join('.gitconfig'), config.join('git/ignore')]
+    rm_rf config.join('git')
   end
 end
 
