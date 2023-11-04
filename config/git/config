@@ -16,6 +16,6 @@
 [credential]
 	helper = /usr/local/bin/git-credential-manager
 [includeIf "hasconfig:remote.*.url:https://github.com/sankichi92/**"]
-  path = sankichi92.ini
+  path = sankichi92.gitconfig
 [includeIf "hasconfig:remote.*.url:https://github.com/arkedge/**"]
-  path = arkedge.ini
+  path = arkedge.gitconfig
