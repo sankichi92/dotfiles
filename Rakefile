@@ -83,7 +83,7 @@ namespace :rubocop do
   end
 end
 
-desc 'Setup RuboCop'
+desc 'Setup IPython'
 task ipython: home.join('.ipython/profile_default/ipython_kernel_config.py')
 
 namespace :ipython do
