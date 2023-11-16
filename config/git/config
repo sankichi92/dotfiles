@@ -10,6 +10,8 @@
 	defaultBranch = main
 [pager]
 	branch = false
+[fetch]
+	prune = true
 [rebase]
 	autostash = true
 	autosquash = true
