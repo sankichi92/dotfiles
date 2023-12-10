@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-desc 'Setup Git, Prezto, Vim, and RuboCop'
-task default: %i[git prezto vim rubocop ipython]
+desc 'Setup all'
+task default: %i[git prezto vim aws rubocop ipython]
 
 repo = Pathname(File.expand_path(__dir__))
 home = Pathname(Dir.home)
@@ -68,6 +68,22 @@ namespace :vim do
   desc 'Remove .vimrc'
   task :clean do
     rm_f home.join('.vimrc')
+  end
+end
+
+desc 'Setup AWS CLI'
+task aws: home.join('.aws/config')
+
+namespace :aws do
+  directory home.join('.aws')
+
+  file home.join('.aws/config') => home.join('.aws') do |t|
+    ln_s repo.join('config/aws/config'), t.name
+  end
+
+  desc 'Remove .aws/config'
+  task :clean do
+    rm_f home.join('.aws/config')
   end
 end
 
