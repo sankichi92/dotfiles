@@ -1,6 +1,6 @@
 [user]
 	name = Takahiro Miyoshi
-	email = takahiro-miyoshi@sankichi.net
+	email = miyoshi-takahiro@arkedgespace.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMaii0+B78G1xIx6c1ZwbksiRvI9x3klj3R4vmETx6aJ
 [gpg]
 	format = ssh
@@ -18,6 +18,11 @@
 [credential]
 	helper =
 	helper = /usr/local/bin/git-credential-manager
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [includeIf "hasconfig:remote.*.url:https://github.com/sankichi92/**"]
 	path = sankichi92.gitconfig
 [includeIf "hasconfig:remote.*.url:https://github.com/arkedge/**"]
